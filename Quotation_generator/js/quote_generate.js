@@ -13,20 +13,32 @@ function generateQuotes() {
 	var typeQuote = getRadioVal(document.getElementById('quoteForm'), 'radios');
 
 	// Generate text and insert divs into the page
-	insertDivs(numberQuotes);
+	insertDivs(numberQuotes, typeQuote);
 
 }
 
 quoteFrags = [
+	"to catch 'em all",
 	"to live in the moment",
-	"to face the wind",
 	"to reach for the stars",
-	"monkeys fall from trees",
+	"to face the wind",
 	"to give a mouse a cookie",
-	"To be or not to be", 
-	"That is the question", 
-	"Ain't it?"
-	
+	"to paint with all the colors of the wind",
+	"like a dainty duck or deer",
+	"like snakes in a plane",
+	"like a box of chocolates",
+	"like a rolling stone",
+	"like water off a duck",
+	"it happens",
+	"that is the question",
+	"monkeys fall from trees",
+	"everybody gets a car",
+	"it never works",
+	"someone has poisoned the water hole",
+	"silly ol' bear",
+	"How does it feel?",
+	"Can you dig it?",
+	"What is it worth?"
 ]
 
 function getRadioVal(form, name) {
@@ -47,18 +59,34 @@ function getRadioVal(form, name) {
 
 
 function assembleText() {
+	// var text = "";
+	// for (var i = 0; i < 3; i++) {
+	// 	var randomIndex = Math.floor((Math.random() * quoteFrags.length));
+	// 	text += quoteFrags[randomIndex] + " ";
+	// }
+	// return text;
+	var text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto illo consequatur, quidem tempora hic laborum, ea sapiente quis. Quas nulla laborum distinctio voluptatibus ipsum impedit sequi laboriosam esse, aspernatur fugiat.";
+	return text;
+
+}
+
+function assembleEnlightenedText() {
 	var text = "";
+	var positions = [];
 	for (var i = 0; i < 3; i++) {
 		var randomIndex = Math.floor((Math.random() * quoteFrags.length));
-		text += quoteFrags[randomIndex] + " ";
+		positions[i] = quoteFrags[randomIndex];
+		// text += quoteFrags[randomIndex] + " ";
 	}
-	// var text = quoteFrags[0] + " " + quoteFrags[1] + " " + quoteFrags[2];
+	var text = positions[0] + " " + positions[1] + " " + positions[2];
 	return text;
 }
 
 
-function insertDivs (numberQuotes) {
+function insertDivs (numberQuotes, typeQuote) {
 
+	// Divide full screen width by # of divs if less than 3
+	// This prevents having off-centered appearance with 2 or less.
 	if (numberQuotes < 3) {
 		colWidth = 12 / numberQuotes;
 	}
@@ -68,8 +96,17 @@ function insertDivs (numberQuotes) {
 	
 	for (var i = 0; i < numberQuotes; i++) {
 
-		var text = assembleText();
-		// var text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto illo consequatur, quidem tempora hic laborum, ea sapiente quis. Quas nulla laborum distinctio voluptatibus ipsum impedit sequi laboriosam esse, aspernatur fugiat.";
+		var text = "";
+
+		if (typeQuote == "enlightened") {
+			text = assembleEnlightenedText();
+		}
+		else {
+			text = assembleText();
+		}
+		// var text = assembleText();
+		// var text = assembleEnlightenedText();
+		
 		
 		var textDiv = document.createElement('div');
 		textDiv.setAttribute('class', "col-md-12 awesomequote");
