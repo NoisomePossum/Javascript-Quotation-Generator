@@ -18,19 +18,23 @@ function generateQuotes() {
 }
 
 quoteFrags = [
+	"to be the best like no one ever was",
 	"to catch 'em all",
+	"to boldly go where no man has gone before",
 	"to live in the moment",
 	"to reach for the stars",
+	"to get to the other side",
 	"to face the wind",
 	"to give a mouse a cookie",
 	"to paint with all the colors of the wind",
+	"like another brick in the wall",
 	"like a dainty duck or deer",
 	"like snakes in a plane",
 	"like a box of chocolates",
 	"like a rolling stone",
 	"like water off a duck",
 	"it happens",
-	"that is the question",
+	"that is the answer",
 	"monkeys fall from trees",
 	"everybody gets a car",
 	"it never works",
@@ -41,12 +45,29 @@ quoteFrags = [
 	"What is it worth?"
 ]
 
+/**********************************************************
+String treatment functions for use in other functions
+***********************************************************/
+function capitalizeFirstLetter(string) {
+	return string[0].toUpperCase() + string.slice(1);
+}
+
+function findFirstWord(string) {
+	var firstWord = string.substr(0, string.indexOf(" "));
+	return firstWord;
+}
+
+
+/***********************************************************
+Functions for defining components of main function
+************************************************************/
+
 function getRadioVal(form, name) {
 	var val;
-	// get list of radio buttons with specified name
+	// gets list of radio buttons with specified name
 	var radios = form.elements[name];
 
-	// loop through the list of radio buttons
+	// loops through the list of radio buttons
 	for (var i = 0; i < radios.length; i++) {
 		if (radios[i].checked) {
 			val = radios[i].value;
@@ -72,12 +93,59 @@ function assembleText() {
 
 function assembleEnlightenedText() {
 	var text = "";
+
+	// Stores the three fragments in the order that they will be assembled
 	var positions = [];
+
+	// Randomly selects a quote fragment for each index in positions
 	for (var i = 0; i < 3; i++) {
 		var randomIndex = Math.floor((Math.random() * quoteFrags.length));
 		positions[i] = quoteFrags[randomIndex];
-		// text += quoteFrags[randomIndex] + " ";
 	}
+
+	// Sets variables that allow for referencing the fragments immediately
+	// before and after the current fragment.
+	var previousFragment = "";
+	var previousIndex = 0;
+	var nextFragment = "";
+	var nextIndex = i + 1;
+
+	if (i > 0) {
+		previousFragment = positions[previousIndex];
+		previousIndex ++;
+	}
+
+	if (i < 2) {
+		nextFragment = positions[nextIndex];
+	}
+
+	// Modify sentence fragments based on contents and surrounding text
+	for (var i = 0; i < positions.length; i++) {
+		var firstWord = findFirstWord(positions[i]);
+
+		if (firstWord == "to") {
+			positions[i] = positions[i].replace(firstWord, "we must");
+		}
+
+
+		// Check next fragment for type to see if it makes a coherent sentence.
+		// Add punctuation if it does not.
+
+		// Add comma to end of like unless next frag starts a sentence.
+		// if (firstWord == "like") {}
+
+
+		// Check previous fragment for end punctuation and act accordingly
+		var regex = /[?.!]/i;
+		if (regex.test(previousFragment.charAt(previousFragment.length - 1))) {
+			positions[i] = capitalizeFirstLetter(positions[i]);
+		}
+
+	}
+
+	// Capitalizes first letter of phrase before assembly.
+	positions[0] = capitalizeFirstLetter(positions[0]);
+
 	var text = positions[0] + " " + positions[1] + " " + positions[2];
 	return text;
 }
