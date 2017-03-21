@@ -18,7 +18,7 @@ function generateQuotes() {
 }
 
 quoteFrags = [
-	"to be the best like no one ever was",
+	"to be the best",
 	"to catch 'em all",
 	"to boldly go where no man has gone before",
 	"to live in the moment",
@@ -27,19 +27,20 @@ quoteFrags = [
 	"to face the wind",
 	"to give a mouse a cookie",
 	"to paint with all the colors of the wind",
+	"like no one ever was",
 	"like another brick in the wall",
 	"like a dainty duck or deer",
 	"like snakes in a plane",
 	"like a box of chocolates",
 	"like a rolling stone",
 	"like water off a duck",
+	"like silly ol' bears",
 	"it happens",
 	"that is the answer",
 	"monkeys fall from trees",
 	"everybody gets a car",
 	"it never works",
 	"someone has poisoned the water hole",
-	"silly ol' bear",
 	"How does it feel?",
 	"Can you dig it?",
 	"What is it worth?"
@@ -48,6 +49,10 @@ quoteFrags = [
 /**********************************************************
 String treatment functions for use in other functions
 ***********************************************************/
+function getRandomIndex(array) {
+	return Math.floor((Math.random() * array.length));
+}
+
 function capitalizeFirstLetter(string) {
 	return string[0].toUpperCase() + string.slice(1);
 }
@@ -55,6 +60,11 @@ function capitalizeFirstLetter(string) {
 function findFirstWord(string) {
 	var firstWord = string.substr(0, string.indexOf(" "));
 	return firstWord;
+}
+
+function findLastChar(string) {
+	var lastChar = string.charAt(string.length - 1);
+	return lastChar;
 }
 
 
@@ -91,6 +101,13 @@ function assembleText() {
 
 }
 
+enlightenedFrags = {
+	"replaceTo" : [
+		"we must",
+		"if we can"
+	]
+}
+
 function assembleEnlightenedText() {
 	var text = "";
 
@@ -99,7 +116,7 @@ function assembleEnlightenedText() {
 
 	// Randomly selects a quote fragment for each index in positions
 	for (var i = 0; i < 3; i++) {
-		var randomIndex = Math.floor((Math.random() * quoteFrags.length));
+		var randomIndex = getRandomIndex(quoteFrags);
 		positions[i] = quoteFrags[randomIndex];
 	}
 
@@ -108,24 +125,65 @@ function assembleEnlightenedText() {
 	var previousFragment = "";
 	var previousIndex = 0;
 	var nextFragment = "";
-	var nextIndex = i + 1;
 
-	if (i > 0) {
-		previousFragment = positions[previousIndex];
-		previousIndex ++;
+	
+
+	// Change the third pos based on the sentence type of pos immediately before it
+	// Check type of pos3
+	// If fragment in pos3 is of type "like"
+	if (findFirstWord(positions[2]) == "like") {
+
+	}
+	// If fragment in pos3 is of type "to"
+	else if (findFirstWord(positions[2]) == "to") {
+
+	}
+	// If fragment is pos3 is of type "question"
+	else if (findLastChar(positions[2]) == "?") {
+
+	}
+	// Fragment in pos3 is of type "statement"
+	else {
+		if (findFirstWord(positions[1]) == "like") {
+			positions[2] += ", after all.";
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] += " anyway.";
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = "what if " + positions[2] + " again?";
+		}
+		else {
+			positions[2] = "naturally, " + positions[1] + ".";
+		}
+
 	}
 
-	if (i < 2) {
-		nextFragment = positions[nextIndex];
-	}
+	// Check type of pos2
+
+	// Perform treatment of text based on above
+
 
 	// Modify sentence fragments based on contents and surrounding text
 	for (var i = 0; i < positions.length; i++) {
+
+		if (i > 0) {
+			previousFragment = positions[previousIndex];
+			previousIndex ++;
+		}
+
+		if (i < 2) {
+			nextFragment = positions[ i + 1];
+		}
+
 		var firstWord = findFirstWord(positions[i]);
 
-		if (firstWord == "to") {
-			positions[i] = positions[i].replace(firstWord, "we must");
-		}
+		// if (firstWord == "to") {
+		// 	var randomIndex = getRandomIndex(enlightenedFrags.replaceTo);
+		// 	positions[i] = positions[i].replace(firstWord, enlightenedFrags.replaceTo[randomIndex]);
+		// }
+
+
 
 
 		// Check next fragment for type to see if it makes a coherent sentence.
@@ -136,10 +194,10 @@ function assembleEnlightenedText() {
 
 
 		// Check previous fragment for end punctuation and act accordingly
-		var regex = /[?.!]/i;
-		if (regex.test(previousFragment.charAt(previousFragment.length - 1))) {
-			positions[i] = capitalizeFirstLetter(positions[i]);
-		}
+		// var regex = /[?.!]/i;
+		// if (regex.test(previousFragment.charAt(previousFragment.length - 1))) {
+		// 	positions[i] = capitalizeFirstLetter(positions[i]);
+		// }
 
 	}
 
