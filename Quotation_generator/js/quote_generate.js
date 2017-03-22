@@ -27,6 +27,7 @@ quoteFrags = [
 	"to face the wind",
 	"to give a mouse a cookie",
 	"to paint with all the colors of the wind",
+	"to pay for it",
 	"like no one ever was",
 	"like another brick in the wall",
 	"like a dainty duck or deer",
@@ -40,7 +41,7 @@ quoteFrags = [
 	"monkeys fall from trees",
 	"everybody gets a car",
 	"it never works",
-	"someone has poisoned the water hole",
+	"someone poisons the water hole",
 	"How does it feel?",
 	"Can you dig it?",
 	"What is it worth?"
@@ -136,7 +137,18 @@ function assembleEnlightenedText() {
 	}
 	// If fragment in pos3 is of type "to"
 	else if (findFirstWord(positions[2]) == "to") {
-
+		if (findFirstWord(positions[1]) == "like") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to ");
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and then you ");
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "you can always ");
+		}
+		else {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we ");
+		}
 	}
 	// If fragment is pos3 is of type "question"
 	else if (findLastChar(positions[2]) == "?") {
