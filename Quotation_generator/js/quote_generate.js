@@ -133,13 +133,13 @@ function assembleEnlightenedText() {
 	// If fragment in pos3 is of type "like"
 	if (findFirstWord(positions[2]) == "like") {
 		if (findFirstWord(positions[1]) == "like") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we are naught but");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we are naught but") + ".";
 		}
 		else if (findFirstWord(positions[1]) == "to") {
-			positions[2] = positions[2] = positions[2].replace(findFirstWord(positions[2]), "we must watch out for");
+			positions[2] = positions[2] = positions[2].replace(findFirstWord(positions[2]), "we must watch out for") + ".";
 		}
 		else if (findLastChar(positions[1]) == "?") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "there will always be");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "there will always be") + ".";
 		}
 		else {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "what about") + "?";
@@ -148,16 +148,16 @@ function assembleEnlightenedText() {
 	// If fragment in pos3 is of type "to"
 	else if (findFirstWord(positions[2]) == "to") {
 		if (findFirstWord(positions[1]) == "like") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to") + ".";
 		}
 		else if (findFirstWord(positions[1]) == "to") {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and then we");
 		}
 		else if (findLastChar(positions[1]) == "?") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we can always");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we can always") + ".";
 		}
 		else {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we") + ".";
 		}
 	}
 	// If fragment is pos3 is of type "question"
@@ -266,46 +266,34 @@ function assembleEnlightenedText() {
 
 	}
 
+	// Moves the end punctuation of fragment 2
+	// To the end of fragment 3 if they form a complete sentence
+	if (findFirstWord(positions[2]) == "and") {
+		var punctuation = findLastChar(positions[1]);
+		if (punctuation != ",") {
+			positions[1] = positions[1].slice(0, -1);
+			positions[2] = positions[2] + punctuation;
+		}
+	}
 
 
-	// Perform treatment of text based on above
+	// Checks positions 2 and 3 for previous fragment's punctuation
+	for (var i = 1; i < positions.length; i++) {
 
+		previousFragment = positions[i - 1];
 
-	// Modify sentence fragments based on contents and surrounding text
-	for (var i = 0; i < positions.length; i++) {
+		var punctuation = findLastChar(previousFragment);
 
-		if (i > 0) {
-			previousFragment = positions[previousIndex];
-			previousIndex ++;
+		// If the previous fragment ends the sentence
+		if (/[.?!]/i.test(punctuation)) {
+			// capitalize the first letter of the current fragment
+			positions[i] = capitalizeFirstLetter(positions[i]);
 		}
 
-		if (i < 2) {
-			nextFragment = positions[ i + 1];
+		// If the previous fragment ends in a comma
+		if (punctuation == ",") {
+			// fine as is, do nothing
 		}
-
-		var firstWord = findFirstWord(positions[i]);
-
-		// if (firstWord == "to") {
-		// 	var randomIndex = getRandomIndex(enlightenedFrags.replaceTo);
-		// 	positions[i] = positions[i].replace(firstWord, enlightenedFrags.replaceTo[randomIndex]);
-		// }
-
-
-
-
-		// Check next fragment for type to see if it makes a coherent sentence.
-		// Add punctuation if it does not.
-
-		// Add comma to end of like unless next frag starts a sentence.
-		// if (firstWord == "like") {}
-
-
-		// Check previous fragment for end punctuation and act accordingly
-		// var regex = /[?.!]/i;
-		// if (regex.test(previousFragment.charAt(previousFragment.length - 1))) {
-		// 	positions[i] = capitalizeFirstLetter(positions[i]);
-		// }
-
 	}
 
 	// Capitalizes first letter of phrase before assembly.
@@ -337,9 +325,6 @@ function insertDivs (numberQuotes, typeQuote) {
 		else {
 			text = assembleText();
 		}
-		// var text = assembleText();
-		// var text = assembleEnlightenedText();
-		
 		
 		var textDiv = document.createElement('div');
 		textDiv.setAttribute('class', "col-md-12 awesomequote");
