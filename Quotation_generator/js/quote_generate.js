@@ -28,7 +28,6 @@ quoteFrags = [
 	"to give a mouse a cookie",
 	"to paint with all the colors of the wind",
 	"to pay for it",
-	"like no one ever was",
 	"like another brick in the wall",
 	"like a dainty duck or deer",
 	"like snakes in a plane",
@@ -42,9 +41,9 @@ quoteFrags = [
 	"everybody gets a car",
 	"it never works",
 	"someone poisons the water hole",
-	"How does it feel?",
-	"Can you dig it?",
-	"What is it worth?"
+	"how does it feel?",
+	"can you dig it?",
+	"what is it worth?"
 ]
 
 /**********************************************************
@@ -133,21 +132,32 @@ function assembleEnlightenedText() {
 	// Check type of pos3
 	// If fragment in pos3 is of type "like"
 	if (findFirstWord(positions[2]) == "like") {
-
+	if (findFirstWord(positions[1]) == "like") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we are naught but");
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] = positions[2] = positions[2].replace(findFirstWord(positions[2]), "we must watch out for");
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "there will always be");
+		}
+		else {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "what of") + "?";
+		}	
 	}
 	// If fragment in pos3 is of type "to"
 	else if (findFirstWord(positions[2]) == "to") {
 		if (findFirstWord(positions[1]) == "like") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to ");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to");
 		}
 		else if (findFirstWord(positions[1]) == "to") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and then you ");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and then you");
 		}
 		else if (findLastChar(positions[1]) == "?") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "you can always ");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "you can always");
 		}
 		else {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we ");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we");
 		}
 	}
 	// If fragment is pos3 is of type "question"
