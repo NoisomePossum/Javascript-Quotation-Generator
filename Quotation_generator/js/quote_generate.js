@@ -41,6 +41,7 @@ quoteFrags = [
 	"everybody gets a car",
 	"it never works",
 	"someone poisons the water hole",
+	"is it ok?",
 	"how does it feel?",
 	"can you dig it?",
 	"what is it worth?"
@@ -162,7 +163,18 @@ function assembleEnlightenedText() {
 	}
 	// If fragment is pos3 is of type "question"
 	else if (findLastChar(positions[2]) == "?") {
-
+		if (findFirstWord(positions[1]) == "like") {
+			positions[2] = "it begs the question: " + positions[2];
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] = "well now, " + positions[2];
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = "well now, " + positions[2];
+		}
+		else {
+			// just leave it the same
+		}
 	}
 	// Fragment in pos3 is of type "statement"
 	else {
