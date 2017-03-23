@@ -130,10 +130,14 @@ function assembleEnlightenedText() {
 	
 
 	// Change the third pos based on the sentence type of pos immediately before it
-	// Check type of pos3
+	
+	/**************************************************
+		Check type of position 3 fragment
+	***************************************************/
+
 	// If fragment in pos3 is of type "like"
 	if (findFirstWord(positions[2]) == "like") {
-	if (findFirstWord(positions[1]) == "like") {
+		if (findFirstWord(positions[1]) == "like") {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we are naught but");
 		}
 		else if (findFirstWord(positions[1]) == "to") {
@@ -143,7 +147,7 @@ function assembleEnlightenedText() {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "there will always be");
 		}
 		else {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "what of") + "?";
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "what about") + "?";
 		}	
 	}
 	// If fragment in pos3 is of type "to"
@@ -152,10 +156,10 @@ function assembleEnlightenedText() {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to");
 		}
 		else if (findFirstWord(positions[1]) == "to") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and then you");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and then we");
 		}
 		else if (findLastChar(positions[1]) == "?") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "you can always");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we can always");
 		}
 		else {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we");
@@ -193,7 +197,81 @@ function assembleEnlightenedText() {
 
 	}
 
-	// Check type of pos2
+	/**************************************************
+		Check type of position 2 fragment
+	***************************************************/
+
+	// If fragment in pos2 is of type "like"
+	if (findFirstWord(positions[1]) == "like") {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "faced with") + ",";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we must");
+			positions[1] = positions[1] + ".";
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[1] = positions[1].slice(findFirstWord(positions[1]));
+			positions[1] = capitalizeFirstLetter(positions[1]) + "?";
+		}
+		else {
+			positions[1] = positions[1] + ".";
+		}	
+	}
+	// If fragment in pos2 is of type "to"
+	else if (findFirstWord(positions[1]) == "to") {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[0] += ",";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "we must") + ".";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "if we") + ",";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "we must") + ".";
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[0] = positions[0].slice(0, -1);
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "if we") + "?";
+		}
+		else {
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "unless we") + ".";
+		}
+	}
+	// If fragment is pos2 is of type "question"
+	else if (findLastChar(positions[1]) == "?") {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[0] = "life is " + positions[0] + ".";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "if we") + ",";
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[1] = "seriously, " + positions[1];
+		}
+		else {
+			positions[0] = positions[0] + ".";
+		}
+	}
+	// Fragment in pos2 is of type "statement"
+	else {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[0] += ",";
+			positions[1] += ".";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we must") + ",";
+			positions[1] = "even if " + positions[1];
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[0] = positions[0].slice(0, -1);
+			positions[1] = "if " + positions[1] + "?";
+		}
+		else {
+			positions[1] = "when " + positions[1] + ".";
+		}
+
+	}
+
+
 
 	// Perform treatment of text based on above
 
