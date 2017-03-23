@@ -20,9 +20,11 @@ function generateQuotes() {
 quoteFrags = [
 	"to be the best",
 	"to catch 'em all",
+	"to shave the whales",
 	"to boldly go where no man has gone before",
 	"to live in the moment",
 	"to reach for the stars",
+	"to feel the good vibrations",
 	"to get to the other side",
 	"to face the wind",
 	"to give a mouse a cookie",
@@ -100,13 +102,6 @@ function assembleText() {
 	var text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto illo consequatur, quidem tempora hic laborum, ea sapiente quis. Quas nulla laborum distinctio voluptatibus ipsum impedit sequi laboriosam esse, aspernatur fugiat.";
 	return text;
 
-}
-
-enlightenedFrags = {
-	"replaceTo" : [
-		"we must",
-		"if we can"
-	]
 }
 
 function assembleEnlightenedText() {
@@ -259,7 +254,7 @@ function assembleEnlightenedText() {
 		}
 		else if (findFirstWord(positions[0]) == "to") {
 			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we must") + ",";
-			positions[1] = "even if " + positions[1];
+			positions[1] = "even if " + positions[1] + ".";
 		}
 		else if (findLastChar(positions[0]) == "?") {
 			positions[0] = positions[0].slice(0, -1);
