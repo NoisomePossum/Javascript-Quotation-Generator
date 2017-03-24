@@ -10,7 +10,7 @@ function generateQuotes() {
 
 	// Capture the type of quote selected
 	// and put it in a variable
-	var typeQuote = getRadioVal(document.getElementById('quoteForm'), 'radios');
+	var typeQuote = getRadioVal(document.getElementById("quoteForm"), "radios");
 
 	// Generate text and insert divs into the page
 	insertDivs(numberQuotes, typeQuote);
@@ -47,13 +47,13 @@ quoteFrags = [
 	"how does it feel?",
 	"can you dig it?",
 	"what is it worth?"
-]
+];
 
 /**********************************************************
 String treatment functions for use in other functions
 ***********************************************************/
 function getRandomIndex(array) {
-	return Math.floor((Math.random() * array.length));
+	return Math.floor(Math.random() * array.length);
 }
 
 function capitalizeFirstLetter(string) {
@@ -326,12 +326,12 @@ function insertDivs (numberQuotes, typeQuote) {
 			text = assembleText();
 		}
 		
-		var textDiv = document.createElement('div');
-		textDiv.setAttribute('class', "col-md-12 awesomequote");
+		var textDiv = document.createElement("div");
+		textDiv.setAttribute("class", "col-md-12 awesomequote");
 		textDiv.append(text);
 		
-		var bootDiv = document.createElement('div')
-		bootDiv.setAttribute('class', "col-sm-12 col-md-" + colWidth);
+		var bootDiv = document.createElement("div");
+		bootDiv.setAttribute("class", "col-sm-12 col-md-" + colWidth);
 		bootDiv.appendChild(textDiv);
 
 		var quoteArray = document.getElementById("quoteResults");
