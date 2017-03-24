@@ -326,10 +326,15 @@ function insertDivs (numberQuotes, typeQuote) {
 			text = assembleText();
 		}
 		
+		// Creates the div  that holds the text and controls style
+		// For the text (background, font etc.)
 		var textDiv = document.createElement("div");
 		textDiv.setAttribute("class", "col-md-12 awesomequote");
 		textDiv.append(text);
 		
+		// Creates the divs that hold the text divs
+		// Putting  a div inside a div in this way makes it possible
+		// to have "margins" in between the divs without affecting their width
 		var bootDiv = document.createElement("div");
 		bootDiv.setAttribute("class", "col-sm-12 col-md-" + colWidth);
 		bootDiv.appendChild(textDiv);
