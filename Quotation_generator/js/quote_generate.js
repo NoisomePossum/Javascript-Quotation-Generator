@@ -140,13 +140,13 @@ function assembleTrumpText() {
 	// If fragment in pos3 is of type "like"
 	if (findFirstWord(positions[2]) == "like") {
 		if (findFirstWord(positions[1]) == "like") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we are naught but") + ".";
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we're just") + " folks.";
 		}
 		else if (findFirstWord(positions[1]) == "to") {
-			positions[2] = positions[2] = positions[2].replace(findFirstWord(positions[2]), "we must watch out for") + ".";
+			positions[2] = positions[2] = positions[2].replace(findFirstWord(positions[2]), "watch out for") + ". Scary.";
 		}
 		else if (findLastChar(positions[1]) == "?") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "there will always be") + ".";
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "there's gotta be") + ".";
 		}
 		else {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "what about") + "?";
@@ -155,22 +155,22 @@ function assembleTrumpText() {
 	// If fragment in pos3 is of type "to"
 	else if (findFirstWord(positions[2]) == "to") {
 		if (findFirstWord(positions[1]) == "like") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to") + ".";
+			positions[2] = "some people say it's crazy " + positions[2] + ". Trust me. It's not crazy.";
 		}
 		else if (findFirstWord(positions[1]) == "to") {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and mexico is gonna");
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and Mexico is gonna");
 		}
 		else if (findLastChar(positions[1]) == "?") {
 			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we can always") + ".";
 		}
 		else {
-			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we") + ".";
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it's like we") + ".";
 		}
 	}
-	// If fragment is pos3 is of type "question"
+	// If fragment in pos3 is of type "question"
 	else if (findLastChar(positions[2]) == "?") {
 		if (findFirstWord(positions[1]) == "like") {
-			positions[2] = "it begs the question: " + positions[2];
+			positions[2] = "i'm like " + positions[2];
 		}
 		else if (findFirstWord(positions[1]) == "to") {
 			positions[2] = "well now, " + positions[2];
@@ -185,7 +185,7 @@ function assembleTrumpText() {
 	// Fragment in pos3 is of type "statement"
 	else {
 		if (findFirstWord(positions[1]) == "like") {
-			positions[2] += ", after all.";
+			positions[2] += " anyway.";
 		}
 		else if (findFirstWord(positions[1]) == "to") {
 			positions[2] += " anyway.";
@@ -206,25 +206,26 @@ function assembleTrumpText() {
 	// If fragment in pos2 is of type "like"
 	if (findFirstWord(positions[1]) == "like") {
 		if (findFirstWord(positions[0]) == "like") {
-			positions[1] = positions[1].replace(findFirstWord(positions[1]), "faced with") + ",";
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "you've never seen anything like this:");
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "on top of") + ".";
 		}
 		else if (findFirstWord(positions[0]) == "to") {
-			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we must");
-			positions[1] = positions[1] + ".";
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we're gonna") + ".";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "we're gonna have") + ". Gonna be the greatest.";
 		}
 		else if (findLastChar(positions[0]) == "?") {
-			positions[1] = positions[1].slice(findFirstWord(positions[1]));
-			positions[1] = capitalizeFirstLetter(positions[1]) + "?";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "everybody saw") + ". It was disgusting.";
 		}
 		else {
-			positions[1] = positions[1] + ".";
+			positions[0] += ".";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "like, wouldn't it be great if we had") + "?";
 		}	
 	}
 	// If fragment in pos2 is of type "to"
 	else if (findFirstWord(positions[1]) == "to") {
 		if (findFirstWord(positions[0]) == "like") {
-			positions[0] += ",";
-			positions[1] = positions[1].replace(findFirstWord(positions[1]), "we must") + ".";
+			positions[0] = "you've never seen anything " + positions[0] + ".";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "we gotta") + ".";
 		}
 		else if (findFirstWord(positions[0]) == "to") {
 			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we're gonna") + ",";
@@ -232,43 +233,46 @@ function assembleTrumpText() {
 		}
 		else if (findLastChar(positions[0]) == "?") {
 			positions[0] = positions[0].slice(0, -1);
-			positions[1] = positions[1].replace(findFirstWord(positions[1]), "if we") + "?";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "if I can't even") + " and I'm the president?";
 		}
 		else {
-			positions[1] = positions[1].replace(findFirstWord(positions[1]), "unless we") + ".";
+			positions[0] += ".";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "Such a disaster, folks. That's why we gotta") + ".";
 		}
 	}
-	// If fragment is pos2 is of type "question"
+	// If fragment in pos2 is of type "question"
 	else if (findLastChar(positions[1]) == "?") {
 		if (findFirstWord(positions[0]) == "like") {
-			positions[0] = "life is " + positions[0] + ".";
+			positions[0] = "you've never seen anything " + positions[0] + ". Totally overrated.";
 		}
 		else if (findFirstWord(positions[0]) == "to") {
-			positions[0] = positions[0].replace(findFirstWord(positions[0]), "if we") + ",";
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "every time we") + " we lose.";
+			positions[1] += " I wanna win, folks.";
 		}
 		else if (findLastChar(positions[0]) == "?") {
 			positions[1] = "seriously, " + positions[1];
 		}
 		else {
-			positions[0] = positions[0] + ".";
+			positions[0] += ". So sad!";
 		}
 	}
 	// Fragment in pos2 is of type "statement"
 	else {
 		if (findFirstWord(positions[0]) == "like") {
-			positions[0] += ",";
+			positions[0] = "you've never seen anything " + positions[0] + ". So sad!";
 			positions[1] += ".";
 		}
 		else if (findFirstWord(positions[0]) == "to") {
-			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we must") + ",";
-			positions[1] = "even if " + positions[1] + ".";
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we gotta") + " folks.";
+			positions[1] = "I mean, I think " + positions[1] + " and I'm, like, a really smart guy.";
 		}
 		else if (findLastChar(positions[0]) == "?") {
 			positions[0] = positions[0].slice(0, -1);
-			positions[1] = "if " + positions[1] + "?";
+			positions[1] = "if " + positions[1] + "? Such a disaster!";
 		}
 		else {
-			positions[1] = "when " + positions[1] + ".";
+			positions[0] += ".";
+			positions[1] = "Ok? I said it. " + capitalizeFirstLetter(positions[1]) + ". Believe me.";
 		}
 
 	}
