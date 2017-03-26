@@ -102,6 +102,11 @@ hr {
   padding-bottom: 1px;
 }
 
+#typePic > img {
+  margin-bottom: 4rem;
+  border: solid black 1px;
+}
+
 .awesomequote {
   background: white;
   border-radius: 5px;

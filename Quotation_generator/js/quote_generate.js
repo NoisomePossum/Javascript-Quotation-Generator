@@ -12,6 +12,9 @@ function generateQuotes() {
 	// and put it in a variable
 	var typeQuote = getRadioVal(document.getElementById("quoteForm"), "radios");
 
+	// Reveal the picture corrpesponding to the quote type selected
+	showPic(typeQuote);
+
 	// Generate text and insert divs into the page
 	insertDivs(numberQuotes, typeQuote);
 
@@ -91,15 +94,214 @@ function getRadioVal(form, name) {
 	return val;
 }
 
+function showPic(type) {
 
-function assembleText() {
-	// var text = "";
-	// for (var i = 0; i < 3; i++) {
-	// 	var randomIndex = Math.floor((Math.random() * quoteFrags.length));
-	// 	text += quoteFrags[randomIndex] + " ";
-	// }
-	// return text;
-	var text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto illo consequatur, quidem tempora hic laborum, ea sapiente quis. Quas nulla laborum distinctio voluptatibus ipsum impedit sequi laboriosam esse, aspernatur fugiat.";
+	var div = document.getElementById("typePic");
+	div.innerHTML = "";
+
+	var img = document.createElement("img");
+	// img.src = "../images/" + type + ".jpg";
+	
+	img.onload = function () {
+		div.appendChild(img);
+	};
+
+	img.src = "images/" + type + ".jpg";
+
+}
+
+
+function assembleTrumpText() {
+	var text = "";
+
+	// Stores the three fragments in the order that they will be assembled
+	var positions = [];
+
+	// Randomly selects a quote fragment for each index in positions
+	for (var i = 0; i < 3; i++) {
+		var randomIndex = getRandomIndex(quoteFrags);
+		positions[i] = quoteFrags[randomIndex];
+	}
+
+	// Sets variables that allow for referencing the fragments immediately
+	// before and after the current fragment.
+	var previousFragment = "";
+	var previousIndex = 0;
+	var nextFragment = "";
+
+	
+
+	// Change the third pos based on the sentence type of pos immediately before it
+	
+	/**************************************************
+		Check type of position 3 fragment
+	***************************************************/
+
+	// If fragment in pos3 is of type "like"
+	if (findFirstWord(positions[2]) == "like") {
+		if (findFirstWord(positions[1]) == "like") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we are naught but") + ".";
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] = positions[2] = positions[2].replace(findFirstWord(positions[2]), "we must watch out for") + ".";
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "there will always be") + ".";
+		}
+		else {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "what about") + "?";
+		}	
+	}
+	// If fragment in pos3 is of type "to"
+	else if (findFirstWord(positions[2]) == "to") {
+		if (findFirstWord(positions[1]) == "like") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it is enough to") + ".";
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "and mexico is gonna");
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "we can always") + ".";
+		}
+		else {
+			positions[2] = positions[2].replace(findFirstWord(positions[2]), "it seems as though we") + ".";
+		}
+	}
+	// If fragment is pos3 is of type "question"
+	else if (findLastChar(positions[2]) == "?") {
+		if (findFirstWord(positions[1]) == "like") {
+			positions[2] = "it begs the question: " + positions[2];
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] = "well now, " + positions[2];
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = "well now, " + positions[2];
+		}
+		else {
+			// just leave it the same
+		}
+	}
+	// Fragment in pos3 is of type "statement"
+	else {
+		if (findFirstWord(positions[1]) == "like") {
+			positions[2] += ", after all.";
+		}
+		else if (findFirstWord(positions[1]) == "to") {
+			positions[2] += " anyway.";
+		}
+		else if (findLastChar(positions[1]) == "?") {
+			positions[2] = "what if " + positions[2] + " again?";
+		}
+		else {
+			positions[2] = "naturally, " + positions[1] + ".";
+		}
+
+	}
+
+	/**************************************************
+		Check type of position 2 fragment
+	***************************************************/
+
+	// If fragment in pos2 is of type "like"
+	if (findFirstWord(positions[1]) == "like") {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "faced with") + ",";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we must");
+			positions[1] = positions[1] + ".";
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[1] = positions[1].slice(findFirstWord(positions[1]));
+			positions[1] = capitalizeFirstLetter(positions[1]) + "?";
+		}
+		else {
+			positions[1] = positions[1] + ".";
+		}	
+	}
+	// If fragment in pos2 is of type "to"
+	else if (findFirstWord(positions[1]) == "to") {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[0] += ",";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "we must") + ".";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we're gonna") + ",";
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "and Mexico is gonna") + ".";
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[0] = positions[0].slice(0, -1);
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "if we") + "?";
+		}
+		else {
+			positions[1] = positions[1].replace(findFirstWord(positions[1]), "unless we") + ".";
+		}
+	}
+	// If fragment is pos2 is of type "question"
+	else if (findLastChar(positions[1]) == "?") {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[0] = "life is " + positions[0] + ".";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "if we") + ",";
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[1] = "seriously, " + positions[1];
+		}
+		else {
+			positions[0] = positions[0] + ".";
+		}
+	}
+	// Fragment in pos2 is of type "statement"
+	else {
+		if (findFirstWord(positions[0]) == "like") {
+			positions[0] += ",";
+			positions[1] += ".";
+		}
+		else if (findFirstWord(positions[0]) == "to") {
+			positions[0] = positions[0].replace(findFirstWord(positions[0]), "we must") + ",";
+			positions[1] = "even if " + positions[1] + ".";
+		}
+		else if (findLastChar(positions[0]) == "?") {
+			positions[0] = positions[0].slice(0, -1);
+			positions[1] = "if " + positions[1] + "?";
+		}
+		else {
+			positions[1] = "when " + positions[1] + ".";
+		}
+
+	}
+
+	// Moves the end punctuation of fragment 2
+	// To the end of fragment 3 if they form a complete sentence
+	if (findFirstWord(positions[2]) == "and") {
+		var punctuation = findLastChar(positions[1]);
+		if (punctuation != ",") {
+			positions[1] = positions[1].slice(0, -1);
+			positions[2] = positions[2] + punctuation;
+		}
+	}
+
+
+	// Checks positions 2 and 3 for previous fragment's punctuation
+	for (var i = 1; i < positions.length; i++) {
+
+		previousFragment = positions[i - 1];
+
+		var punctuation = findLastChar(previousFragment);
+
+		// If the previous fragment ends the sentence
+		if (/[.?!]/i.test(punctuation)) {
+			// capitalize the first letter of the current fragment
+			positions[i] = capitalizeFirstLetter(positions[i]);
+		}
+	}
+
+	// Capitalizes first letter of phrase before assembly.
+	positions[0] = capitalizeFirstLetter(positions[0]);
+
+	var text = positions[0] + " " + positions[1] + " " + positions[2];
 	return text;
 
 }
@@ -289,11 +491,6 @@ function assembleEnlightenedText() {
 			// capitalize the first letter of the current fragment
 			positions[i] = capitalizeFirstLetter(positions[i]);
 		}
-
-		// If the previous fragment ends in a comma
-		if (punctuation == ",") {
-			// fine as is, do nothing
-		}
 	}
 
 	// Capitalizes first letter of phrase before assembly.
@@ -323,7 +520,7 @@ function insertDivs (numberQuotes, typeQuote) {
 			text = assembleEnlightenedText();
 		}
 		else {
-			text = assembleText();
+			text = assembleTrumpText();
 		}
 		
 		// Creates the div  that holds the text and controls style
